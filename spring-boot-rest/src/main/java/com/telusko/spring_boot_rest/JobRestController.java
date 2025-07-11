@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")  // Allow React
 public class JobRestController {
 
     @Autowired
@@ -24,10 +25,16 @@ public class JobRestController {
         return jobService.getJob(postId);
     }
 
+    @GetMapping("jobPost/keyword/{keyword}")
+    public List<JobPost> searchByKeyWord(@PathVariable("keyword") String keyword){
+        return jobService.search(keyword);
+    }
+
     @PostMapping("jobPost")
     public void addJob(@RequestBody JobPost jobPost){
         jobService.addJobPost(jobPost);
     }
+
 
     @PutMapping("jobPost")
     public JobPost updateJob(@RequestBody JobPost jobPost){
